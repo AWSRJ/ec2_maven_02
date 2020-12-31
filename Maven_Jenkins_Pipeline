@@ -12,7 +12,6 @@ pipeline
             }
         }
 
-        agent node
         stage ('Clean the previous build')
         {
             steps
