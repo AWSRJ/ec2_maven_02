@@ -16,7 +16,7 @@ pipeline
         {
             steps
             {
-                mvn clean
+                sh "mvn clean"
             }
         }
     }
