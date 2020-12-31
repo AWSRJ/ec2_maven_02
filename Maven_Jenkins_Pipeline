@@ -1,0 +1,15 @@
+pipeline
+{
+    agent any
+
+    stages
+    {
+        stage ('Pull artifacts from github repository')
+        {
+            steps
+            {
+                git branch: 'main', url: 'https://github.com/AWSRJ/ec2_maven_02'
+            }
+        }
+    }
+}
