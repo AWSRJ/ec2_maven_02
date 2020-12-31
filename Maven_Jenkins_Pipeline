@@ -55,5 +55,16 @@ pipeline
                 }
             }
         }
+
+        stage ('Deploy the package to tomcat server private IP 172.31.52.131')
+        {
+            steps
+            {
+                sshagent(credentials: ['cicd_pipeline_Jenkins_to_Tomcat'])
+                {
+                    sh 'scp -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/Maven_HelloWorld_Pipeline_01/target/*.jar ec2-user@54.160.127.137:/var/lib/tomcat/webapps'
+                }
+            }
+        }
     }
 }
