@@ -56,7 +56,7 @@ pipeline
             }
         }
 
-        stage (Checking connection to tomcat server private IP 172.31.52.131')
+        stage ('Checking connection to tomcat server private IP 172.31.52.131')
         {
             steps
             {
