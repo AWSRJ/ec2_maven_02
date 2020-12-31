@@ -11,5 +11,13 @@ pipeline
                 git branch: 'main', url: 'https://github.com/AWSRJ/ec2_maven_02'
             }
         }
+
+        stage ('Clean the previous build')
+        {
+            steps
+            {
+                mvn clean
+            }
+        }
     }
 }
