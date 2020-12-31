@@ -56,6 +56,17 @@ pipeline
             }
         }
 
+        stage (Checking connection to tomcat server private IP 172.31.52.131')
+        {
+            steps
+            {
+                sshagent(credentials: ['cicd_pipeline_Jenkins_to_Tomcat'])
+                {
+                    sh 'echo Connection Succeeded'
+                }
+            }
+        }
+
         stage ('Deploy the package to tomcat server private IP 172.31.52.131')
         {
             steps
