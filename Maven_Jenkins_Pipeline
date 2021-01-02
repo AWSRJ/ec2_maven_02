@@ -71,7 +71,10 @@ pipeline
         {
             environment
             {
-                appl_file = fileExists '/var/lib/tomcat/webapps/MavenHelloWorldProject-1.0-SNAPSHOT.jar'
+                sshagent(credentials: ['cicd_pipeline_Jenkins_to_Tomcat'])
+                {
+                    appl_file = fileExists '/var/lib/tomcat/webapps/MavenHelloWorldProject-1.0-SNAPSHOT.jar'
+                }
             }
             stages
             {
