@@ -69,13 +69,12 @@ pipeline
 
         stage ('Check application file on tomcat server private IP 172.31.52.131')
         {
+            environment
+            {
+                appl_file = fileExists '/var/lib/tomcat/webapps/MavenHelloWorldProject-1.0-SNAPSHOT.jar'
+            }
             stages
             {
-                environment
-                {
-                    appl_file = fileExists '/var/lib/tomcat/webapps/MavenHelloWorldProject-1.0-SNAPSHOT.jar'
-                }
-
                 stage('conditional if exists')
                 {
                     when { expression { appl_file == 'true' } }
