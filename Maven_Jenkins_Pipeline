@@ -66,16 +66,5 @@ pipeline
                 }
             }
         }
-
-        stage ('Check the file on tomcat server private IP 172.31.52.131')
-        {
-            steps
-            {
-                sshagent(credentials: ['cicd_pipeline_Jenkins_to_Tomcat'])
-                {
-                    step def file_exists = fileExists '/var/lib/tomcat/webapps/MavenHelloWorldProject-1.0-SNAPSHOT.jar'
-                }
-            }
-        }
     }
 }
