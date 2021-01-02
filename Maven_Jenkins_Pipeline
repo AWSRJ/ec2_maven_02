@@ -56,17 +56,6 @@ pipeline
             }
         }
 
-        stage ('Checking connection to tomcat server private IP 172.31.52.131')
-        {
-            steps
-            {
-                sshagent(credentials: ['cicd_pipeline_Jenkins_to_Tomcat'])
-                {
-                    sh 'echo Connection Succeeded'
-                }
-            }
-        }
-
         stage ('Deploy the package to tomcat server private IP 172.31.52.131')
         {
             steps
@@ -74,6 +63,18 @@ pipeline
                 sshagent(credentials: ['cicd_pipeline_Jenkins_to_Tomcat'])
                 {
                     sh 'scp -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/Maven_HelloWorld_Pipeline_01/target/*.jar ec2-user@172.31.52.131:/var/lib/tomcat/webapps'
+                }
+            }
+        }
+
+        stage ('Check the file on tomcat server private IP 172.31.52.131')
+        {
+            steps
+            {
+                sshagent(credentials: ['cicd_pipeline_Jenkins_to_Tomcat'])
+                {
+                    File file = New File("/var/lib/tomcat/webapps/MavenHelloWorldProject-1.0-SNAPSHOT.jar")
+                    println file.exists()
                 }
             }
         }
