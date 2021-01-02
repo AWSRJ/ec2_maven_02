@@ -73,7 +73,7 @@ pipeline
             {
                 sshagent(credentials: ['cicd_pipeline_Jenkins_to_Tomcat'])
                 {
-                    def file_exists = fileExists '/var/lib/tomcat/webapps/MavenHelloWorldProject-1.0-SNAPSHOT.jar"
+                    def file_exists = fileExists '/var/lib/tomcat/webapps/MavenHelloWorldProject-1.0-SNAPSHOT.jar'
                     if (file_exists)
                     {
                         echo 'File exists'
