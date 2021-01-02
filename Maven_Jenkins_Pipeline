@@ -73,7 +73,7 @@ pipeline
             {
                 sshagent(credentials: ['cicd_pipeline_Jenkins_to_Tomcat'])
                 {
-                    steps def file_exists = fileExists '/var/lib/tomcat/webapps/MavenHelloWorldProject-1.0-SNAPSHOT.jar'
+                    step def file_exists = fileExists '/var/lib/tomcat/webapps/MavenHelloWorldProject-1.0-SNAPSHOT.jar'
                 }
             }
         }
