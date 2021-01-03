@@ -69,16 +69,15 @@ pipeline
                     when { expression { appl_file == 'true' } }
                     steps
                     {
-                        sh 'java -cp target/MavenHelloWorldProject-1.0-SNAPSHOT.jar com.example.maven.App > abc.txt'
-                        sh 'cat abc.txt'
+                        sh 'java -cp target/MavenHelloWorldProject-1.0-SNAPSHOT.jar com.example.maven.App > index.html'
                     }
                 }
-                stage(' if not exists')
+                stage('Notify if application file do not exists')
                 {
                     when { expression { appl_file == 'false' } }
                     steps
                     {
-                        echo 'file does not exists'
+                        sh 'echo Application file MavenHelloWorldProject-1.0-SNAPSHOT.jar not found' > index.html'
                     }
                 }
             }
