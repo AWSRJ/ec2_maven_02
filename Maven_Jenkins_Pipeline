@@ -96,13 +96,13 @@ pipeline
 
         stage ('Verification of code deployment on tomcat server')
         {
-            environment
-            {
-                package_file = "/var/lib/tomcat/webapps/myapp/index.html"
-            }
             steps
             {
-                sh 'echo ${package_file}'
+                script
+                {
+                    def package_file = "/var/lib/tomcat/webapps/myapp/index.html"
+                    echo "${package_file}"
+                }
             }
         }
     }
