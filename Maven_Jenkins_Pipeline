@@ -96,10 +96,13 @@ pipeline
 
         stage ('Verification of code deployment on tomcat server')
         {
-            script
+            steps
             {
-                def remote = [name: 'tomcat', host: '172.31.52.131', user: 'ec2-user', allowAnyHosts: true]
-                sshCommand remote: remote, command: "ls -lrt /var/lib/tomcat/webapps/myapp/"
+                script
+                {
+                    def remote = [name: 'tomcat', host: '172.31.52.131', user: 'ec2-user', allowAnyHosts: true]
+                    sshCommand remote: remote, command: "ls -lrt /var/lib/tomcat/webapps/myapp/"
+                }
             }
         }
     }
