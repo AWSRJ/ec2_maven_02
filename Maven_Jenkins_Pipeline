@@ -98,7 +98,7 @@ pipeline
         {
             environment
             {
-                package_file = /var/lib/tomcat/webapps/myapp/index.html
+                package_file = "/var/lib/tomcat/webapps/myapp/index.html"
             }
             steps
             {
