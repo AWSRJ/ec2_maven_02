@@ -94,16 +94,14 @@ pipeline
             }
         }
 
+        def remote = [:]
+        remote.name = 'tomcat'
+        remote.host = '172.31.52.131'
+        remote.user = 'ec2-user'
+        remote.allowAnyHosts = true
         stage ('Verification of code deployment on tomcat server')
         {
-            steps
-            {
-                script
-                {
-                    def package_file = "/var/lib/tomcat/webapps/myapp/index.html"
-                    echo "${package_file}"
-                }
-            }
+            sshCommand remote: remote, command: "ls -lrt /var/lib/tomcat/webapps/myapp/"
         }
     }
 }
