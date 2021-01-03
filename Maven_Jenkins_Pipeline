@@ -89,7 +89,7 @@ pipeline
             {
                 sshagent(credentials: ['cicd_pipeline_Jenkins_to_Tomcat'])
                 {
-                    sh 'scp -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/Maven_HelloWorld_Pipeline_01/target/*.jar ec2-user@172.31.52.131:/var/lib/tomcat/webapps'
+                    sh 'scp -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/Maven_HelloWorld_Pipeline_01/index.html ec2-user@172.31.52.131:/var/lib/tomcat/webapps/myapp'
                 }
             }
         }
