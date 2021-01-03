@@ -100,7 +100,7 @@ pipeline
             {
                 script
                 {
-                    def remote = [name: 'tomcat', host: '172.31.52.131', user: 'ec2-user', allowAnyHosts: true]
+                    def remote = [name: 'tomcat', host: '172.31.52.131', user: 'ec2-user', password: '' allowAnyHosts: true]
                     sshCommand remote: remote, command: "echo /var/lib/tomcat/webapps/myapp/index.html > a1.txt"
                 }
             }
