@@ -77,7 +77,7 @@ pipeline
                     when { expression { appl_file == 'false' } }
                     steps
                     {
-                        sh 'echo Application file MavenHelloWorldProject-1.0-SNAPSHOT.jar not found' > index.html'
+                        sh 'echo Application file MavenHelloWorldProject-1.0-SNAPSHOT.jar not found > index.html'
                     }
                 }
             }
