@@ -93,5 +93,17 @@ pipeline
                 }
             }
         }
+
+        environment
+        {
+            package_file = /var/lib/tomcat/webapps/myapp/index.html
+        }
+        stage ('Verification of code deployment on tomcat server')
+        {
+            steps
+            {
+                sh 'echo ${package_file}'
+            }
+        }
     }
 }
