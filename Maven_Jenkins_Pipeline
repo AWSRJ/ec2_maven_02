@@ -139,7 +139,7 @@ pipeline
                 {
                     environment
                     {
-                        fileData = readFile(file: '/var/lib/jenkins/workspace/Maven_HelloWorld_Pipeline_01/output.txt')
+                        fileData = readFile file: '/var/lib/jenkins/workspace/Maven_HelloWorld_Pipeline_01/output.txt'
                     }
                     when { expression { fileData == 'found' } }
                     steps
