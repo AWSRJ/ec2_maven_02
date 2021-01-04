@@ -58,10 +58,10 @@ pipeline
 
         stage ('Check application file')
         {
-            environment
-            {
-                appl_file = fileExists '/var/lib/jenkins/workspace/Maven_HelloWorld_Project/target/MavenHelloWorldProject-1.0-SNAPSHOT.jar'
-            }
+            //environment
+            //{
+            //    appl_file = fileExists '/var/lib/jenkins/workspace/Maven_HelloWorld_Project/target/MavenHelloWorldProject-1.0-SNAPSHOT.jar'
+            //}
             stages
             {
                 stage('Execute application file if exists')
