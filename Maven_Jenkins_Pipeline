@@ -100,12 +100,18 @@ pipeline
             {
                 stage('Hello')
                 {
-                    echo 'stage 1'
+                    steps
+                    {
+                        echo 'stage 1'
+                    }
                 }
 
                 stage('Bye')
                 {
-                    echo 'stage 2'
+                    steps
+                    {
+                        echo 'stage 2'
+                    }
                 }
             }
         }
