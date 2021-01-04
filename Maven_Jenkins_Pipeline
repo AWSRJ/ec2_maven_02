@@ -115,7 +115,7 @@ pipeline
                             remote.identityFile = sshKeyFile
                             stage ('ssh Command')
                             {
-                                sshCommand remote: remote, command: 'ls -lrt'
+                                sshCommand remote: remote, command: 'ls -lrt /var/lib/tomcat/webapps/myapp'
                             }
                         }
                     }
