@@ -112,7 +112,14 @@ pipeline
                     {
                         script
                         {
-                            echo 'stage 2'
+                            echo 'stage 2A'
+                        }
+                    }
+                    steps
+                    {
+                        script
+                        {
+                            echo 'stage 2B'
                         }
                     }
                 }
