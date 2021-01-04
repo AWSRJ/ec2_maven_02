@@ -110,7 +110,10 @@ pipeline
                 {
                     steps
                     {
-                        echo 'stage 2'
+                        script
+                        {
+                            echo 'stage 2'
+                        }
                     }
                 }
             }
