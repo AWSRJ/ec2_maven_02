@@ -141,7 +141,7 @@ pipeline
                     {
                         fileData = readFile file: '/var/lib/jenkins/workspace/Maven_HelloWorld_Pipeline_01/output.txt'
                     }
-                    when { expression { fileData == 'found' } }
+                    when { expression { fileData == "found" } }
                     steps
                     {
                         script
