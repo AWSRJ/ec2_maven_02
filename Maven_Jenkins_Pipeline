@@ -141,8 +141,8 @@ pipeline
                     {
                         script
                         {
-                            def fileData = readFile(file: '/var/lib/jenkins/workspace/Maven_HelloWorld_Pipeline_01/output.txt')
-                            if (env.fileData.trim() == 'found')
+                            def fileData = readFile file: '/var/lib/jenkins/workspace/Maven_HelloWorld_Pipeline_01/output.txt'
+                            if (fileData.trim() == 'found')
                             {
                                 echo 'Application file successfully deployed on tomcat server'
                             }
