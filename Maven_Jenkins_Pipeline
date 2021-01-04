@@ -134,29 +134,6 @@ pipeline
                         }
                     }
                 }
-
-                stage('...Checking return code from tomcat server')
-                {
-                    script
-                    {
-                        def fileData = readFile(file: '/var/lib/tomcat/webapps/myapp/output.txt')
-                    }
-                    when { expression { fileData == 'found' } }
-                    steps
-                    {
-                        script
-                        {
-                            if (fileData == 'found')
-                            {
-                                echo 'Application file successfully deployed on tomcat server'
-                            }
-                            else
-                            {
-                                echo 'Application file failed to deploy on tomcat server'
-                            }
-                        }
-                    }
-                }
             }
         }
     }
