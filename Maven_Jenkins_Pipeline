@@ -94,7 +94,7 @@ pipeline
             }
         }
 
-        stages ('Verification of code deployment on tomcat server')
+        stages ()
         {
             stage('...Connecting to tomcat server')
             {
@@ -133,7 +133,7 @@ pipeline
                 }
             }
 
-            stage('...Checking content of output file on Jenkins server')
+            stage('Verification of code deployment on tomcat server')
             {
                 script
                 {
