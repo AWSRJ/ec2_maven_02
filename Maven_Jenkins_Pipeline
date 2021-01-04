@@ -94,7 +94,7 @@ pipeline
             }
         }
 
-        stages ()
+        stages
         {
             stage('...Connecting to tomcat server')
             {
