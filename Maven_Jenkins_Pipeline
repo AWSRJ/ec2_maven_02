@@ -112,6 +112,7 @@ pipeline
                         {
                             remote.passphrase = passwd
                             remote.user = usernm
+                            remote.identityFile = sshKeyFile
                             stage ('ssh Command')
                             {
                                 sshCommand remote: remote, command: 'ls -lrt'
