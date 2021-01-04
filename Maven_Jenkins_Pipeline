@@ -100,8 +100,24 @@ pipeline
             {
                 script
                 {
-                    def remote = [name: '172.31.52.131', host: '172.31.52.131', user: 'ec2-user', allowAnyHosts: true, agent: true]
-                    sshCommand remote: remote, command: "echo /var/lib/tomcat/webapps/myapp/index.html > a1.txt", sudo: true
+                    stage('ssh')
+                    {
+                        def remote = [:]
+                        remote.name = '172.31.52.131'
+                        remote.host = '172.31.52.131'
+                        remote.allowAnyHosts = true
+                        withCredentials([sshUserPrivateKey(credentialsId: 'cicd_pipeline_Jenkins_to_Tomcat',
+                                                           keyFileVariable: 'sshKeyFile', passphraseVariable: 'passwd',
+                                                           usernameVariable: 'usernm')])
+                        {
+                            remote.passphrase = passwd
+                            remote.user = usernm
+                            stage ('ssh Command')
+                            {
+                                sshCommand remote: remote, command: 'ls -lrt'
+                            }
+                        }
+                    }
                 }
             }
         }
