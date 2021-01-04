@@ -100,23 +100,20 @@ pipeline
             {
                 script
                 {
-                    stage('ssh')
+                    withCredentials([sshUserPrivateKey(credentialsId: 'cicd_pipeline_connect_to_tomcat',
+                                                       keyFileVariable: 'identity', passphraseVariable: '',
+                                                       usernameVariable: 'userName')])
                     {
                         def remote = [:]
-                        remote.name = '172.31.52.131'
+                        remote.name = 'tomcat'
                         remote.host = '172.31.52.131'
                         remote.allowAnyHosts = true
-                        withCredentials([sshUserPrivateKey(credentialsId: 'cicd_pipeline_Jenkins_to_Tomcat',
-                                                           keyFileVariable: 'sshKeyFile', passphraseVariable: 'passwd',
-                                                           usernameVariable: 'usernm')])
+                        remote.user = userName
+                        remote.identityFile = identity
+                        stage('Checking application file')
                         {
-                            remote.passphrase = passwd
-                            remote.user = usernm
-                            remote.identityFile = sshKeyFile
-                            stage ('ssh Command')
-                            {
-                                sshCommand remote: remote, command: 'ls -lrt /var/lib/tomcat/webapps/myapp'
-                            }
+                            sshCommand remote: remote, command: 'ls -lrt /var/lib/tomcat/webapps/myapp/'
+                            sshCommand remote: remote, command: "[[ -f /var/lib/tomcat/webapps/myapp/index1.html ]] && echo 'found' || echo 'not found' > output.txt"
                         }
                     }
                 }
