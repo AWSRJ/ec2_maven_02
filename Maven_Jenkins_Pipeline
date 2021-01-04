@@ -94,45 +94,64 @@ pipeline
             }
         }
 
-        stage ('Verification of code deployment on tomcat server')
+        stages ('Verification of code deployment on tomcat server')
         {
-            steps
+            stage('...Connecting to tomcat server')
+            {
+                steps
+                {
+                    script
+                    {
+                        // 1. Execute ssh-keygen on Jenkins server to generate the public and private key
+                        // 2. Copy public key from '/home/ec2-user/.ssh/id_rsa.pub' on Jenkins server
+                        // 3. Paste public key in '/home/ec2-user/.ssh/authorized_keys' on Tomcat server
+                        // 4. Go to Jenkins URL -> credentials -> Add Credential
+                        // 5. Select 'SSH user private key' and Paste Private key given in
+                        //    '/home/ec2-user/.ssh/id_rsa' file.
+                        withCredentials([sshUserPrivateKey(credentialsId: 'cicd_pipeline_connect_to_tomcat',
+                                                        keyFileVariable: 'identity', passphraseVariable: '',
+                                                        usernameVariable: 'userName')])
+                        {
+                            def remote = [:]
+                            remote.name = 'tomcat'
+                            remote.host = '172.31.52.131'
+                            remote.allowAnyHosts = true
+                            remote.user = userName
+                            remote.identityFile = identity
+                            stage('...Checking application file on tomcat server')
+                            {
+                                sshCommand remote: remote, command: 'ls -lrt /var/lib/tomcat/webapps/myapp/'
+                                sshCommand remote: remote,
+                                        command: "([[ -f /var/lib/tomcat/webapps/myapp/index.html ]] && \
+                                                    echo 'found' || echo 'not found') > /var/lib/tomcat/webapps/myapp/output.txt"
+                                sshGet remote: remote, from: '/var/lib/tomcat/webapps/myapp/output.txt',
+                                                    into: '/var/lib/jenkins/workspace/Maven_HelloWorld_Pipeline_01/output.txt', 
+                                                    override: true
+                            }
+                        }
+                    }
+                }
+            }
+
+            stage('...Checking content of output file on Jenkins server')
             {
                 script
                 {
-                    // 1. Execute ssh-keygen on Jenkins server to generate the public and private key
-                    // 2. Copy public key from '/home/ec2-user/.ssh/id_rsa.pub' on Jenkins server
-                    // 3. Paste public key in '/home/ec2-user/.ssh/authorized_keys' on Tomcat server
-                    // 4. Go to Jenkins URL -> credentials -> Add Credential
-                    // 5. Select 'SSH user private key' and Paste Private key given in
-                    //    '/home/ec2-user/.ssh/id_rsa' file.
-                    withCredentials([sshUserPrivateKey(credentialsId: 'cicd_pipeline_connect_to_tomcat',
-                                                    keyFileVariable: 'identity', passphraseVariable: '',
-                                                    usernameVariable: 'userName')])
+                    def fileData = readFile(file: '/var/lib/tomcat/webapps/myapp/output.txt')
+                }
+                when { expression { fileData == 'found' } }
+                steps
+                {
+                    script
                     {
-                        def remote = [:]
-                        remote.name = 'tomcat'
-                        remote.host = '172.31.52.131'
-                        remote.allowAnyHosts = true
-                        remote.user = userName
-                        remote.identityFile = identity
-                        stage('...Checking application file')
+                        if (fileData == 'found')
                         {
-                            sshCommand remote: remote, command: 'ls -lrt /var/lib/tomcat/webapps/myapp/'
-                            sshCommand remote: remote,
-                                    command: "([[ -f /var/lib/tomcat/webapps/myapp/index.html ]] && \
-                                                echo 'found' || echo 'not found') > /var/lib/tomcat/webapps/myapp/output.txt"
-                            sshGet remote: remote, from: '/var/lib/tomcat/webapps/myapp/output.txt',
-                                                into: '/var/lib/jenkins/workspace/Maven_HelloWorld_Pipeline_01/output.txt', 
-                                                override: true
+                            echo 'Application file successfully deployed on tomcat server'
                         }
-                    }
-
-                    def fileData = readFile(file: '/var/lib/jenkins/workspace/Maven_HelloWorld_Pipeline_01/output.txt')
-                    when { expression { fileData == 'found' } }
-                    steps
-                    {
-                        echo 'Code successfully deployed on tomcat server'
+                        else
+                        {
+                            echo 'Application file failed to deploy on tomcat server'
+                        }
                     }
                 }
             }
