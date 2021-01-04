@@ -113,10 +113,11 @@ pipeline
                         stage('Checking application file')
                         {
                             sshCommand remote: remote, command: 'ls -lrt /var/lib/tomcat/webapps/myapp/'
-                            sshCommand remote: remote,
-                                               command: "[[ -f /var/lib/tomcat/webapps/myapp/index.html ]] && \
-                                                         echo 'found' || echo 'not found' > output.txt"
-                            sshGet remote: remote, from: 'output.txt',
+                            sshCommand
+                                remote: remote,
+                                command: "([[ -f /var/lib/tomcat/webapps/myapp/index.html ]] && \
+                                           echo 'found' || echo 'not found') > /var/lib/tomcat/webapps/myapp/output.txt"
+                            sshGet remote: remote, from: '/var/lib/tomcat/webapps/myapp/output.txt',
                                                    into: '/var/lib/jenkins/workspace/Maven_HelloWorld_Pipeline_01/output.txt', 
                                                    override: true
                         }
