@@ -142,6 +142,7 @@ pipeline
                         script
                         {
                             def fileData = readFile(file: '/var/lib/tomcat/webapps/myapp/output.txt')
+                            echo 'fileData'
                             if (fileData == 'found')
                             {
                                 echo 'Application file successfully deployed on tomcat server'
