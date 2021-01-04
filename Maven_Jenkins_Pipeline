@@ -137,17 +137,11 @@ pipeline
 
                 stage('...Checking return code from tomcat server')
                 {
-                    environment
-                    {
-                        fileData = readFile file: '/var/lib/jenkins/workspace/Maven_HelloWorld_Pipeline_01/output.txt'
-                    }
                     steps
                     {
                         script
                         {
-                            //def fileData = readFile(file: '/var/lib/jenkins/workspace/Maven_HelloWorld_Pipeline_01/output.txt')
-                            echo 'Hello'
-                            echo env.fileData.trim()
+                            def fileData = readFile(file: '/var/lib/jenkins/workspace/Maven_HelloWorld_Pipeline_01/output.txt')
                             if (env.fileData.trim() == 'found')
                             {
                                 echo 'Application file successfully deployed on tomcat server'
